@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container mt-5">
+      <div class="row">
+          <div class="col-md-6 offset-3 ">
+              <div id="app">
+                  <form @submit.prevent="addItem" class="bg-info">
+                      <div class="form-group">
+                          <div class="text-center" for="">Enter </div>
+                          <div class="col-md-8 offset-2">
+                              <input v-model="newItem" type="text" class="form-control form-control-sm" aria-describedby="helpId" placeholder="">
+                          </div>
+                          <small id="helpId" class="form-text text-center text-muted">Item Name</small>
+                      </div>
+                  </form>
+                  <h4 class="text-center list-group-item active">{{ title }}</h4>
+                  <ul class="list-group">
+                     
+
+                      <li v-for="(item,index) in items"  class="list-group-item">
+                         {{item.name}} , {{item.index}} 
+                         <button class="btn btn-info  float-right btn-sm"  v-on:click.prevent="removeItem(index)" class="float-right"> x </button>
+                         <input min="0" type="number" class="float-right form-control-sm text-right" style="width:50%" v-model="item.price">
+                      </li>
+                       <li class="list-group-item active">Total :  {{total}}</li>  
+                  </ul>
+
+                </div>
+          </div>
+      </div>
+  </div>
+ 
+
+  <script>
+    
+    new Vue({
+      el: '#app',
+      data: {
+        title: 'Hello World!',
+        items:[
+          {name: 'rice', price : 20.20 },
+          {name: 'Potato', price : 120.00 },
+          {name: 'Milk', price : 80.80 },
+        ],
+        newItem: ''
+      },
+      methods : {
+        addItem(){
+          console.log(this.newItem);
+          this.items.push({
+            name: this.newItem,
+            price : 0.0
+          })
+        },
+        removeItem( id){
+          if(this.items.length ==1){
+            alert('Alert !')
+          }else{
+            this.items.splice(id,1);
+            console.log(id);
+          }
+          
+        }
+        
+      },
+      computed: {
+        total(){
+
+          console.log();
+          var total  = 0;
+          this.items.forEach(item => {
+            total += parseFloat(item.price)
+          });
+          return total;
+        }
+      }
+    })
+  
+  </script>
+</body>
+</html>
